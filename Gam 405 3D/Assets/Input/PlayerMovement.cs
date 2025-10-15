@@ -45,8 +45,13 @@ public class Playermovement : MonoBehaviour
 
     private void HandleMovement()
     {
+
+
         Vector3 inputDir = new Vector3(moveInput.x, 0f, moveInput.y);
         if (inputDir.sqrMagnitude > 1f) inputDir.Normalize();
+
+        Vector3 move = transform.TransformDirection(inputDir) * moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position +  move);
 
     }
 }
