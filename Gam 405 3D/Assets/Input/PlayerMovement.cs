@@ -6,10 +6,17 @@ public class Playermovement : MonoBehaviour
 {
 
     public InputActionReference moveAction;
+    public InputActionReference lookAction;
+    public Transform cameraTransform;
 
+    public float mouseSensitivity = 2f;
+    
     public float moveSpeed = 5f;
 
     [SerializeField] private Vector2 moveInput;
+    [SerializeField] private Vector2 lookInput;
+
+    float pitch;
 
     [SerializeField] private Rigidbody rb;
 
@@ -24,6 +31,9 @@ public class Playermovement : MonoBehaviour
     void Update()
     {
         moveInput = moveAction != null ? moveAction.action.ReadValue<Vector2>() : Vector2.zero;
+        lookInput = lookAction != null ? lookAction.action.ReadValue<Vector2>() : Vector2.zero;
+
+        if (cameraTransform) HandleLook();
 
     }
 
@@ -35,11 +45,13 @@ public class Playermovement : MonoBehaviour
     void OnEnable()
     {
         moveAction?.action.Enable();
+        lookAction?.action.Enable();
 
     }
     void OnDisable()
     {
         moveAction?.action.Disable();
+        lookAction?.action.Disable();
 
     }
 
@@ -54,4 +66,16 @@ public class Playermovement : MonoBehaviour
         rb.MovePosition(rb.position +  move);
 
     }
+
+    void HandleLook()
+    {
+        float yaw = lookInput.x * mouseSensitivity;
+        transform.Rotate(Vector3.up * yaw, Space.World);
+
+        pitch -= lookInput.y * mouseSensitivity;
+        pitch = Mathf.Clamp(pitch, -80f, 80f);
+        cameraTransform.localEulerAngles = new Vector3(pitch, 0f, 0f);
+
+    }
+
 }

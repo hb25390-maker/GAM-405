@@ -170,7 +170,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3b1b4698-0fed-4d64-b9a3-52d8e35455d2"",
-                    ""path"": """",
+                    ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
